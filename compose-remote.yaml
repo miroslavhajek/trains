@@ -1,0 +1,20 @@
+services:
+
+    php:
+        build:
+            context: ./.dockerfiles/php
+        command: >
+            sh -c "composer install -o && bin/console do:mi:mi && bin/console app:generate-remote-location ${GPS_START}"
+        volumes:
+            - .:/var/www/html
+        links:
+            - database
+
+    database:
+        image: mysql:8.3.0
+        ports:
+            - "3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_DATABASE: app
+            TZ: UTC

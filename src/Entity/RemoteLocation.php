@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\RemoteLocationRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use LogicException;
+use function str_replace;
 
 #[ORM\Entity(repositoryClass: RemoteLocationRepository::class)]
 class RemoteLocation
@@ -44,9 +46,19 @@ class RemoteLocation
     }
 
 
-    public function setLat(string $lat): static
+    public function getLatAsFloat(): float
     {
-        $this->lat = $lat;
+        if ($this->lat === null) {
+            throw new LogicException('Lat is not set');
+        }
+
+        return (float)str_replace(',', '.', $this->lat);
+    }
+
+
+    public function setLat(string|float $lat): static
+    {
+        $this->lat = (string) $lat;
 
         return $this;
     }
@@ -58,9 +70,19 @@ class RemoteLocation
     }
 
 
-    public function setLon(string $lon): static
+    public function getLonAsFloat(): float
     {
-        $this->lon = $lon;
+        if ($this->lon === null) {
+            throw new LogicException('Lon is not set');
+        }
+
+        return (float)str_replace(',', '.', $this->lon);
+    }
+
+
+    public function setLon(string|float $lon): static
+    {
+        $this->lon = (string) $lon;
 
         return $this;
     }
