@@ -64,7 +64,6 @@
         </properties>
     </rule>
     <rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName.NoMatchBetweenTypeNameAndFileName">
-        <exclude-pattern>/etc/*</exclude-pattern>
         <exclude-pattern>/migrations/*</exclude-pattern>
     </rule>
     <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint">
