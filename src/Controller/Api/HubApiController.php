@@ -37,7 +37,7 @@ class HubApiController extends AbstractController
             return new JsonResponse(['error' => 'Name is not unique'], Response::HTTP_BAD_REQUEST);
         }
 
-        return new JsonResponse(['id' => $device->getId(), Response::HTTP_CREATED]);
+        return new JsonResponse(['id' => $device->getId()], Response::HTTP_CREATED);
     }
 
 
