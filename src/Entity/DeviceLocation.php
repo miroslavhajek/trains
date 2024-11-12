@@ -5,8 +5,6 @@ namespace App\Entity;
 use App\Repository\DeviceLocationRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
-use LogicException;
-use function str_replace;
 
 #[ORM\Entity(repositoryClass: DeviceLocationRepository::class)]
 class DeviceLocation
@@ -19,9 +17,6 @@ class DeviceLocation
     #[ORM\ManyToOne(inversedBy: 'locations')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Device $device = null;
-
-    #[ORM\Column(length: 64, enumType: RemoteLocationState::class)]
-    private RemoteLocationState $state = RemoteLocationState::New;
 
     #[ORM\Column(length: 32)]
     private ?string $lat = null;
@@ -47,25 +42,29 @@ class DeviceLocation
     }
 
 
+    public function getDevice(): ?Device
+    {
+        return $this->device;
+    }
+
+
+    public function setDevice(Device $device): static
+    {
+        $this->device = $device;
+
+        return $this;
+    }
+
+
     public function getLat(): ?string
     {
         return $this->lat;
     }
 
 
-    public function getLatAsFloat(): float
+    public function setLat(string $lat): static
     {
-        if ($this->lat === null) {
-            throw new LogicException('Lat is not set');
-        }
-
-        return (float)str_replace(',', '.', $this->lat);
-    }
-
-
-    public function setLat(string|float $lat): static
-    {
-        $this->lat = (string) $lat;
+        $this->lat = $lat;
 
         return $this;
     }
@@ -77,19 +76,9 @@ class DeviceLocation
     }
 
 
-    public function getLonAsFloat(): float
+    public function setLon(string $lon): static
     {
-        if ($this->lon === null) {
-            throw new LogicException('Lon is not set');
-        }
-
-        return (float)str_replace(',', '.', $this->lon);
-    }
-
-
-    public function setLon(string|float $lon): static
-    {
-        $this->lon = (string) $lon;
+        $this->lon = $lon;
 
         return $this;
     }
@@ -104,34 +93,6 @@ class DeviceLocation
     public function setCreatedAt(DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-
-    public function getState(): RemoteLocationState
-    {
-        return $this->state;
-    }
-
-
-    public function setState(RemoteLocationState $state): static
-    {
-        $this->state = $state;
-
-        return $this;
-    }
-
-
-    public function getDevice(): ?Device
-    {
-        return $this->device;
-    }
-
-
-    public function setDevice(Device $device): static
-    {
-        $this->device = $device;
 
         return $this;
     }
