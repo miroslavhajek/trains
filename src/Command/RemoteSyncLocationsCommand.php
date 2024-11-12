@@ -37,6 +37,7 @@ class RemoteSyncLocationsCommand extends Command
             ?? throw new LogicException('No HUB found');
 
         while (true) { // @phpstan-ignore-line
+            $io->error('1');
             $locations = $this->remoteLocationRepository->findBy([], ['createdAt' => 'DESC'], 5);
 
             foreach ($locations as $location) {
@@ -50,6 +51,6 @@ class RemoteSyncLocationsCommand extends Command
             sleep(1);
         }
 
-        return Command::SUCCESS;
+        return Command::SUCCESS; // @phpstan-ignore-line
     }
 }

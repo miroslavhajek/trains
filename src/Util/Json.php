@@ -10,7 +10,7 @@ use const JSON_UNESCAPED_UNICODE;
 class Json
 {
     /**
-     * @throws JsonException
+     * @throws \JsonException
      */
     public static function encode(mixed $data, int $options = 0): string
     {
@@ -23,12 +23,12 @@ class Json
 
 
     /**
-     * @throws JsonException
-     * @return mixed[]
+     * @throws \JsonException
+     * @return array<string, mixed>
      */
     public static function decode(string $data): array
     {
         // phpcs:ignore Generic.PHP.ForbiddenFunctions.FoundWithAlternative
-        return json_decode($data, true, 512, JSON_THROW_ON_ERROR);
+        return json_decode($data, true, 512, JSON_THROW_ON_ERROR); // @phpstan-ignore-line
     }
 }
