@@ -14,12 +14,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity(fields: ['slug'])]
 class Page
 {
+    private const string SLUG_REGEX = '/^[a-z0-9]+(-[a-z0-9]+)*$/';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Regex(pattern: self::SLUG_REGEX)]
     #[Gedmo\Slug(fields: ['title'], unique: true, updatable: false)]
     private ?string $slug = null;
 

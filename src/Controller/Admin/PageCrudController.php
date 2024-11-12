@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Page;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
@@ -26,7 +27,8 @@ class PageCrudController extends AbstractCrudController
             ->setDisabled()
             ->hideOnForm();
         yield TextField::new('title');
-        yield TextField::new('slug');
+        yield TextField::new('slug')
+            ->setRequired($pageName !== Crud::PAGE_NEW);
         yield DateTimeField::new('publishedAt', 'Published at');
         yield TextEditorField::new('content')
             ->setFormTypeOption('sanitize_html', true)
