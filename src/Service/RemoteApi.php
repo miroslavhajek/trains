@@ -73,6 +73,7 @@ class RemoteApi
                 'body' => Json::encode([
                     'lat' => $location->getLat(),
                     'lon' => $location->getLon(),
+                    'remoteCreatedAt' => $location->getCreatedAt()->format('Y-m-d H:i:s'),
                 ]),
             ],
         );

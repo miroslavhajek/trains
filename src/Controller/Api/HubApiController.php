@@ -53,20 +53,13 @@ class HubApiController extends AbstractController
             $request->getContent(),
             DeviceLocation::class,
             'json',
-            [AbstractNormalizer::IGNORED_ATTRIBUTES => ['id', 'device', 'state']],
+            [AbstractNormalizer::ATTRIBUTES => ['lat', 'lon', 'remoteCreatedAt']],
         );
 
         $location->setDevice($device);
 
-
-
-        $entityManager->persist($device);
-
-        try {
-            $entityManager->flush();
-        } catch (UniqueConstraintViolationException $e) {
-            throw new BadRequestHttpException('Name is not unique', $e);
-        }
+        $entityManager->persist($location);
+        $entityManager->flush();
 
         return new Response();
     }
