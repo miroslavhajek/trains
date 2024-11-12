@@ -44,7 +44,7 @@ class DeviceCrudController extends AbstractCrudController
         yield TextField::new('name');
         yield BooleanField::new('connected')
             ->setDisabled();
-        yield DateTimeField::new('createdAt')
+        yield DateTimeField::new('createdAt', 'Created at')
             ->setDisabled();
     }
 }

@@ -18,6 +18,14 @@ class PageCrudController extends AbstractCrudController
     }
 
 
+    public function configureCrud(Crud $crud): Crud
+    {
+        return parent::configureCrud($crud)
+            ->setDefaultSort(['publishedAt' => 'DESC', 'createdAt' => 'DESC'])
+            ->setPageTitle(Crud::PAGE_INDEX, 'Pages');
+    }
+
+
     /**
      * @inheritdoc
      */
