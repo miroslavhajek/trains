@@ -26,4 +26,17 @@ class PageRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+
+    /**
+     * @return Page[]
+     */
+    public function findPublishedPages(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.publishedAt IS NOT NULL')
+            ->orderBy('p.publishedAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

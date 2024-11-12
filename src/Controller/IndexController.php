@@ -12,7 +12,7 @@ class IndexController extends AbstractController
     #[Route('/', name: 'app_index')]
     public function index(PageRepository $pageRepository): Response
     {
-        $pages = $pageRepository->findAll();
+        $pages = $pageRepository->findPublishedPages();
 
         return $this->render('index/index.html.twig', [
             'pages' => $pages,
