@@ -4,11 +4,21 @@ services:
         build:
             context: ./.dockerfiles/php
         command: >
-            sh -c "composer install -o && bin/console do:mi:mi && bin/console remote:connect && bin/console remote:generate-remote-location ${GPS_START}"
+            sh -c "
+                composer install -o && \
+                bin/console do:mi:mi -n && \
+                bin/console remote:connect && \
+                bin/console remote:generate-random-locations ${GPS_START} & \
+                bin/console remote:sync-locations &
+                wait
+            "
         volumes:
             - .:/var/www/html
         links:
             - database
+        networks:
+            - local-network
+            - trains-network
 
     database:
         image: mysql:8.3.0
@@ -18,3 +28,11 @@ services:
             MYSQL_ROOT_PASSWORD: password
             MYSQL_DATABASE: app
             TZ: UTC
+        networks:
+            - local-network
+
+networks:
+    local-network:
+        driver: bridge
+    trains-network:
+        driver: bridge

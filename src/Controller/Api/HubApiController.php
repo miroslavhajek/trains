@@ -27,7 +27,7 @@ class HubApiController extends AbstractController
             $request->getContent(),
             Device::class,
             'json',
-            [AbstractNormalizer::IGNORED_ATTRIBUTES => ['id', 'locations']],
+            [AbstractNormalizer::ATTRIBUTES => ['name']],
         );
 
         $entityManager->persist($device);

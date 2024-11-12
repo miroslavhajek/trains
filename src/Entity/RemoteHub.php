@@ -15,8 +15,11 @@ class RemoteHub
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'uuid')]
+    #[ORM\Column(type: 'uuid', unique: true)]
     private ?Uuid $remoteId = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $remoteName = null;
 
     #[ORM\Column]
     private DateTimeImmutable $createdAt;
@@ -50,5 +53,19 @@ class RemoteHub
     public function getCreatedAt(): DateTimeImmutable
     {
         return $this->createdAt;
+    }
+
+
+    public function getRemoteName(): ?string
+    {
+        return $this->remoteName;
+    }
+
+
+    public function setRemoteName(string $remoteName): static
+    {
+        $this->remoteName = $remoteName;
+
+        return $this;
     }
 }

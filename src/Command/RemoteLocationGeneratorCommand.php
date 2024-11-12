@@ -15,8 +15,8 @@ use function is_string;
 use function sleep;
 use function sprintf;
 
-#[AsCommand(name: 'remote:generate-remote-location', description: 'Generate random Remote Location')]
-class GenerateRemoteLocationCommand extends Command
+#[AsCommand(name: 'remote:generate-random-locations', description: 'Generate random Remote Locations')]
+class RemoteLocationGeneratorCommand extends Command
 {
     public function __construct(private readonly RemoteLocationGenerator $remoteLocationGenerator)
     {
@@ -38,14 +38,12 @@ class GenerateRemoteLocationCommand extends Command
         }
 
         $io = new SymfonyStyle($input, $output);
-        $io->success(sprintf('Started on %s', $gps));
+        $io->success(sprintf('GPS generating started on "%s"', $gps));
 
         [$latitude, $longitude] = Gps::fromString($gps);
 
         while (true) { // @phpstan-ignore-line
-            $newLocation = $this->remoteLocationGenerator->generate($latitude, $longitude);
-            $io->writeln(sprintf('%s, %s', $newLocation->getLat(), $newLocation->getLon()));
-
+            $this->remoteLocationGenerator->generate($latitude, $longitude);
             sleep(1);
         }
     }

@@ -15,4 +15,10 @@ class RemoteHubRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, RemoteHub::class);
     }
+
+
+    public function findHubSettings(): ?RemoteHub
+    {
+        return $this->findOneBy([], ['createdAt' => 'DESC']);
+    }
 }
