@@ -3,7 +3,7 @@
 namespace App\Command;
 
 use App\Repository\RemoteHubRepository;
-use App\Service\RemoteApi;
+use App\Service\RemoteService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -16,7 +16,7 @@ class RemoteConnectCommand extends Command
 {
     public function __construct(
         private readonly RemoteHubRepository $remoteHubRepository,
-        private readonly RemoteApi $remoteApi,
+        private readonly RemoteService $remoteService,
     ) {
         parent::__construct();
     }
@@ -33,7 +33,7 @@ class RemoteConnectCommand extends Command
             return Command::SUCCESS;
         }
 
-        $hub = $this->remoteApi->connect();
+        $hub = $this->remoteService->initializeDevice();
 
         $io->success(sprintf('Connected as "%s"', $hub->getRemoteId()));
 

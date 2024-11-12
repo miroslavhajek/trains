@@ -16,16 +16,18 @@ class RemoteHub
     private ?int $id = null;
 
     #[ORM\Column(type: 'uuid', unique: true)]
-    private ?Uuid $remoteId = null;
+    private Uuid $remoteId;
 
     #[ORM\Column(length: 255)]
-    private ?string $remoteName = null;
+    private string $remoteName;
 
     #[ORM\Column]
     private DateTimeImmutable $createdAt;
 
-    public function __construct()
+    public function __construct(Uuid $remoteId, string $remoteName)
     {
+        $this->remoteId = $remoteId;
+        $this->remoteName = $remoteName;
         $this->createdAt = new DateTimeImmutable();
     }
 
@@ -36,17 +38,9 @@ class RemoteHub
     }
 
 
-    public function getRemoteId(): ?Uuid
+    public function getRemoteId(): Uuid
     {
         return $this->remoteId;
-    }
-
-
-    public function setRemoteId(Uuid $remoteId): static
-    {
-        $this->remoteId = $remoteId;
-
-        return $this;
     }
 
 
@@ -56,16 +50,8 @@ class RemoteHub
     }
 
 
-    public function getRemoteName(): ?string
+    public function getRemoteName(): string
     {
         return $this->remoteName;
-    }
-
-
-    public function setRemoteName(string $remoteName): static
-    {
-        $this->remoteName = $remoteName;
-
-        return $this;
     }
 }
