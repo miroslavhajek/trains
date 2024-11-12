@@ -7,7 +7,7 @@ use function json_encode;
 use const JSON_THROW_ON_ERROR;
 use const JSON_UNESCAPED_UNICODE;
 
-class Json
+final class Json
 {
     /**
      * @throws \JsonException
