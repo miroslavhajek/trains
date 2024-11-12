@@ -32,6 +32,7 @@ class PageCrudController extends AbstractCrudController
         yield DateTimeField::new('publishedAt', 'Published at');
         yield TextEditorField::new('content')
             ->setFormTypeOption('sanitize_html', true)
+            ->hideOnIndex()
             ->setColumns(12);
         yield DateTimeField::new('createdAt', 'Created at')
             ->setDisabled()
