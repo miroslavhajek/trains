@@ -24,8 +24,8 @@ readonly class RemoteLocationGenerator
 
         $lastLocation = $this->remoteLocationRepository->findOneBy([], ['createdAt' => 'DESC']);
         if ($lastLocation !== null) {
-            $latRand = random_int(-10, 10) / 1000;
-            $lonRand = random_int(-10, 10) / 1000;
+            $latRand = random_int(-2, 10) / 1000;
+            $lonRand = random_int(-2, 10) / 1000;
 
             $newLocation->setLat($lastLocation->getLatAsFloat() + $latRand);
             $newLocation->setLon($lastLocation->getLonAsFloat() + $lonRand);
