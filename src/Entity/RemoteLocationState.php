@@ -5,4 +5,5 @@ namespace App\Entity;
 enum RemoteLocationState: string
 {
     case New = 'NEW';
+    case SyncFailed = 'SYNC_FAILED';
 }

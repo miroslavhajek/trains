@@ -8,9 +8,9 @@ services:
                 composer install -o && \
                 bin/console do:mi:mi -n && \
                 bin/console remote:connect && \
-                bin/console remote:generate-random-locations ${GPS_START} & \
+                (bin/console remote:generate-random-locations ${GPS_START} &
                 bin/console remote:sync-locations &
-                wait
+                wait)
             "
         volumes:
             - .:/var/www/html

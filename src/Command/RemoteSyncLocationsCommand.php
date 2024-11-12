@@ -2,11 +2,13 @@
 
 namespace App\Command;
 
+use App\Entity\RemoteLocationState;
 use App\Repository\RemoteHubRepository;
 use App\Repository\RemoteLocationRepository;
 use App\Service\RemoteApi;
 use Doctrine\ORM\EntityManagerInterface;
 use LogicException;
+use RuntimeException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -37,18 +39,24 @@ class RemoteSyncLocationsCommand extends Command
             ?? throw new LogicException('No HUB found');
 
         while (true) { // @phpstan-ignore-line
-            $io->error('1');
             $locations = $this->remoteLocationRepository->findBy([], ['createdAt' => 'DESC'], 5);
 
             foreach ($locations as $location) {
-                $this->remoteApi->syncLocation($hub, $location);
+                try {
+                    $this->remoteApi->syncLocation($hub, $location);
 
-                $io->writeln(sprintf('%s, %s', $location->getLat(), $location->getLon()));
+                    $io->success(sprintf('%s, %s', $location->getLat(), $location->getLon()));
+                } catch (RuntimeException $e) {
+                    $io->error(sprintf('%s, %s (%s)', $location->getLat(), $location->getLon(), $e->getMessage()));
+
+                    $location->setState(RemoteLocationState::SyncFailed);
+                }
+
                 $this->entityManager->remove($location);
             }
 
             $this->entityManager->flush();
-            sleep(1);
+            usleep(500);
         }
 
         return Command::SUCCESS; // @phpstan-ignore-line
