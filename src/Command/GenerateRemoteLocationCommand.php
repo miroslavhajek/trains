@@ -15,7 +15,7 @@ use function is_string;
 use function sleep;
 use function sprintf;
 
-#[AsCommand(name: 'app:generate-remote-location', description: 'Generate random Remote Location')]
+#[AsCommand(name: 'remote:generate-remote-location', description: 'Generate random Remote Location')]
 class GenerateRemoteLocationCommand extends Command
 {
     public function __construct(private readonly RemoteLocationGenerator $remoteLocationGenerator)

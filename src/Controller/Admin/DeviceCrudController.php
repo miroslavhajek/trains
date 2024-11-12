@@ -2,20 +2,28 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Connection;
+use App\Entity\Device;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class ConnectionCrudController extends AbstractCrudController
+class DeviceCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Connection::class;
+        return Device::class;
+    }
+
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return parent::configureCrud($crud)
+            ->setDefaultSort(['createdAt' => 'DESC'])
+            ->setPageTitle(Crud::PAGE_INDEX, 'Devices');
     }
 
 
@@ -31,8 +39,12 @@ class ConnectionCrudController extends AbstractCrudController
      */
     public function configureFields(string $pageName): iterable
     {
-        yield IdField::new('id');
-        yield BooleanField::new('connected');
-        yield TextField::new('createdAt');
+        yield TextField::new('id')
+            ->setDisabled();
+        yield TextField::new('name');
+        yield BooleanField::new('connected')
+            ->setDisabled();
+        yield DateTimeField::new('createdAt')
+            ->setDisabled();
     }
 }

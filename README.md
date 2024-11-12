@@ -21,3 +21,12 @@
    ```dotenv
     DATABASE_URL="mysql://root:password@database:3306/app?serverVersion=8.3.0&charset=utf8mb4"
    ```
+
+## Architecture
+
+### DB
+
+| HUB | Remote devices |
+|-----|----------------|
+| *   | remote_*       |
+

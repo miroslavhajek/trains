@@ -2,17 +2,17 @@
 
 namespace App\Repository;
 
-use App\Entity\Connection;
+use App\Entity\RemoteHub;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Connection>
+ * @extends ServiceEntityRepository<RemoteHub>
  */
-class ConnectionRepository extends ServiceEntityRepository
+class RemoteHubRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Connection::class);
+        parent::__construct($registry, RemoteHub::class);
     }
 }

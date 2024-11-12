@@ -4,7 +4,7 @@ services:
         build:
             context: ./.dockerfiles/php
         command: >
-            sh -c "composer install -o && bin/console do:mi:mi && bin/console app:generate-remote-location ${GPS_START}"
+            sh -c "composer install -o && bin/console do:mi:mi && bin/console remote:connect && bin/console remote:generate-remote-location ${GPS_START}"
         volumes:
             - .:/var/www/html
         links:
