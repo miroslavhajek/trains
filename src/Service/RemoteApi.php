@@ -8,6 +8,7 @@ use App\Util\Json;
 use Doctrine\ORM\EntityManagerInterface;
 use RuntimeException;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\String\ByteString;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -46,7 +47,7 @@ class RemoteApi
         );
 
         $statusCode = $response->getStatusCode();
-        if ($statusCode !== 200) {
+        if ($statusCode !== Response::HTTP_CREATED) {
             throw new RuntimeException('Connect HUB failed', $statusCode);
         }
 
@@ -79,7 +80,7 @@ class RemoteApi
         );
 
         $statusCode = $response->getStatusCode();
-        if ($statusCode !== 200) {
+        if ($statusCode !== Response::HTTP_CREATED) {
             throw new RuntimeException(sprintf('Sync location "%d" failed', $location->getId()), $statusCode);
         }
     }

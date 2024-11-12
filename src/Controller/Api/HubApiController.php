@@ -16,7 +16,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class HubApiController extends AbstractController
 {
-    #[Route('/api/devices', methods: ['POST'])]
+    #[Route('/api/devices', methods: ['POST'], name: 'app_hub_api_create_device')]
     public function createDevice(
         Request $request,
         SerializerInterface $serializer,
@@ -37,11 +37,11 @@ class HubApiController extends AbstractController
             return new JsonResponse(['error' => 'Name is not unique'], Response::HTTP_BAD_REQUEST);
         }
 
-        return new JsonResponse(['id' => $device->getId()]);
+        return new JsonResponse(['id' => $device->getId(), Response::HTTP_CREATED]);
     }
 
 
-    #[Route('/api/devices/{id}/locations', methods: ['POST'])]
+    #[Route('/api/devices/{id}/locations', methods: ['POST'], name: 'app_hub_api_create_location')]
     public function createLocation(
         Request $request,
         Device $device,
@@ -60,6 +60,6 @@ class HubApiController extends AbstractController
         $entityManager->persist($location);
         $entityManager->flush();
 
-        return new Response();
+        return new Response(null, Response::HTTP_CREATED);
     }
 }
