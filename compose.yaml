@@ -39,6 +39,6 @@ services:
 
 networks:
     local-network:
-        driver: bridge
+        internal: true
     trains-network:
         driver: bridge
