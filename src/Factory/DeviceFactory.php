@@ -20,7 +20,6 @@ final class DeviceFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'connected' => false,
             'name' => self::faker()->text(255),
             'createdAt' => DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
         ];
