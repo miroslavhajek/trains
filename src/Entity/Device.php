@@ -30,9 +30,6 @@ class Device
     #[ORM\Column]
     private DateTimeImmutable $createdAt;
 
-    #[ORM\Column]
-    private bool $connected = true;
-
     public function __construct()
     {
         $this->createdAt = new DateTimeImmutable();
@@ -74,20 +71,6 @@ class Device
     }
 
 
-    public function isConnected(): bool
-    {
-        return $this->connected;
-    }
-
-
-    public function setConnected(bool $connected): static
-    {
-        $this->connected = $connected;
-
-        return $this;
-    }
-
-
     /**
      * @return Collection<int, DeviceLocation>
      */
@@ -105,5 +88,16 @@ class Device
         }
 
         return $this;
+    }
+
+
+    public function isOnline(): bool
+    {
+        $threshold = (new DateTimeImmutable())->modify('-10 seconds');
+        $filter = static function (int $key, DeviceLocation $location) use ($threshold) {
+            return $location->getRemoteCreatedAt() > $threshold;
+        };
+
+        return $this->getLocations()->findFirst($filter) !== null;
     }
 }
