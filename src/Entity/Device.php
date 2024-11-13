@@ -103,10 +103,10 @@ class Device
     }
 
 
-    public function lastOnlineAt(): DateTimeImmutable
+    public function lastOnlineAt(): ?DateTimeImmutable
     {
         return $this->getLocations()->findFirst(
-            static fn (int $key, DeviceLocation $location) => $location,
+            static fn (int $key, DeviceLocation $location) => true,
         )?->getCreatedAt();
     }
 }
