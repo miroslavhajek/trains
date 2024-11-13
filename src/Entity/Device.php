@@ -25,6 +25,7 @@ class Device
      * @var Collection<int, DeviceLocation>
      */
     #[ORM\OneToMany(targetEntity: DeviceLocation::class, mappedBy: 'device', orphanRemoval: true)]
+    #[ORM\OrderBy(['createdAt' => 'DESC'])]
     private Collection $locations;
 
     #[ORM\Column]
@@ -95,9 +96,17 @@ class Device
     {
         $threshold = (new DateTimeImmutable())->modify('-10 seconds');
         $filter = static function (int $key, DeviceLocation $location) use ($threshold) {
-            return $location->getRemoteCreatedAt() > $threshold;
+            return $location->getCreatedAt() > $threshold;
         };
 
         return $this->getLocations()->findFirst($filter) !== null;
+    }
+
+
+    public function lastOnlineAt(): DateTimeImmutable
+    {
+        return $this->getLocations()->findFirst(
+            static fn (int $key, DeviceLocation $location) => $location,
+        )?->getCreatedAt();
     }
 }
