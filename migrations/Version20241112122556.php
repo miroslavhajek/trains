@@ -12,14 +12,9 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20241112122556 extends AbstractMigration
 {
-    public function getDescription(): string
-    {
-        return '';
-    }
 
     public function up(Schema $schema): void
     {
-        // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE TABLE device (id VARCHAR(36) NOT NULL, name VARCHAR(255) NOT NULL, created_at DATETIME NOT NULL, connected TINYINT(1) NOT NULL, UNIQUE INDEX UNIQ_92FB68E5E237E06 (name), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4');
         $this->addSql('CREATE TABLE device_location (id INT AUTO_INCREMENT NOT NULL, state VARCHAR(64) NOT NULL, lat VARCHAR(32) NOT NULL, lon VARCHAR(32) NOT NULL, created_at DATETIME NOT NULL, remote_created_at DATETIME NOT NULL, device_id VARCHAR(36) NOT NULL, INDEX IDX_D0AAD0EB94A4C7D4 (device_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4');
         $this->addSql('CREATE TABLE remote_hub (id INT AUTO_INCREMENT NOT NULL, remote_id BINARY(16) NOT NULL, remote_name VARCHAR(255) NOT NULL, created_at DATETIME NOT NULL, UNIQUE INDEX UNIQ_D4EDCF1F2A3E9C94 (remote_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4');
@@ -30,7 +25,6 @@ final class Version20241112122556 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE device_location DROP FOREIGN KEY FK_D0AAD0EB94A4C7D4');
         $this->addSql('DROP TABLE device');
         $this->addSql('DROP TABLE device_location');
