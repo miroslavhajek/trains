@@ -45,7 +45,7 @@ class RemoteSyncLocationsCommand extends Command
                 try {
                     $this->remoteService->sendLocation($hub, $location);
 
-                    $io->success(sprintf('%s, %s', $location->getLat(), $location->getLon()));
+                    $io->success(sprintf('%s, %s (%d)', $location->getLat(), $location->getLon(), $location->getId()));
                 } catch (RuntimeException $e) {
                     $io->error(sprintf('%s, %s (%s)', $location->getLat(), $location->getLon(), $e->getMessage()));
 

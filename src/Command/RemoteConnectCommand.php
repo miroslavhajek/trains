@@ -28,14 +28,14 @@ class RemoteConnectCommand extends Command
 
         $hub = $this->remoteHubRepository->findHubSettings();
         if ($hub !== null) {
-            $io->success(sprintf('Already connected as "%s"', $hub->getRemoteId()));
+            $io->success(sprintf('Already connected as "%s: %s"', $hub->getRemoteName(), $hub->getRemoteId()));
 
             return Command::SUCCESS;
         }
 
         $hub = $this->remoteService->initializeDevice();
 
-        $io->success(sprintf('Connected as "%s"', $hub->getRemoteId()));
+        $io->success(sprintf('Connected as "%s: %s"', $hub->getRemoteName(), $hub->getRemoteId()));
 
         return Command::SUCCESS;
     }
