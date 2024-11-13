@@ -42,3 +42,10 @@
 |-----|---------------|
 | *   | remote_*      |
 
+
+## TODO
+
+- [ ] Batch sync
+- [ ] Prijimat zpravy s polohou do fronty (Rabbit) a async. je nasledne zpracovavat
+- [ ] Performace - zobrazeni `Is Online` u `Device` se resi prohledanim pole (otestovat Criteria)
+- [ ] Nedela se rozdilna synchronizace (pouze se posilaji data o poloze; neposila se info ani o druhem pokusu apod.)
