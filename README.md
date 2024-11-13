@@ -17,9 +17,9 @@
 
 ### ⚙️ Remote Device
 
-1. Start `GPS_START={GPS} docker-compose -f compose-remote.yaml --project-name {REMOTE_NAME} up`
+1. Start `GPS_START={GPS} docker-compose -f compose-remote.yaml --project-name {PROJECT_NAME} up`
     - {GPS} is start location and
-    - {REMOTE_NAME} must be unique docker name.
+    - {PROJECT_NAME} must be unique Docker name.
 
     Example: `GPS_START=10.250604,10.865496 docker-compose -f compose-remote.yaml --project-name remote1 up`
 
