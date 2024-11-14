@@ -4,18 +4,21 @@ namespace App\Controller\Api;
 
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use App\Factory\DeviceFactory;
-use App\Factory\DeviceLocationFactory;
+use App\Message\RemoteGpsReceivedMessage;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\Envelope; // phpcs:ignore SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Zenstruck\Foundry\Test\Factories;
 use Zenstruck\Foundry\Test\ResetDatabase;
+use Zenstruck\Messenger\Test\InteractsWithMessenger;
 
 class HubApiControllerTest extends ApiTestCase
 {
 
     use Factories;
     use ResetDatabase;
+    use InteractsWithMessenger;
 
     public function testCreateDevice(): void
     {
@@ -85,8 +88,10 @@ class HubApiControllerTest extends ApiTestCase
 
         self::assertResponseStatusCodeSame(Response::HTTP_CREATED);
 
-        $locations = DeviceLocationFactory::repository()->count([]);
+        /** @var Envelope[] $envelope */
+        $envelope = $this->transport('async')->get();
 
-        self::assertSame(0, $locations, 'Async'); //TODO: Check messenger
+        self::assertCount(1, $envelope);
+        self::assertInstanceOf(RemoteGpsReceivedMessage::class, $envelope[0]->getMessage());
     }
 }

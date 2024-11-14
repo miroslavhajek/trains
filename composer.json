@@ -93,6 +93,7 @@
         "symfony/browser-kit": "7.1.*",
         "symfony/maker-bundle": "^1.60",
         "symfony/phpunit-bridge": "^7.1",
-        "zenstruck/foundry": "^2.0"
+        "zenstruck/foundry": "^2.0",
+        "zenstruck/messenger-test": "^1.11"
     }
 }
