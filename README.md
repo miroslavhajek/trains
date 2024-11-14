@@ -4,26 +4,27 @@
 
 ## Production
 
+### ☁️ HUB
+
 1. Start Docker `$ docker compose up -d`
 1. Open terminal `$ docker exec -it trains-php-1 bash`
 1. Install dependencies (`$ composer install`...)
-2. Start consuming Remote device's messages `$ bin/console messenger:consume`
-
-### ☁️ HUB
+1. Start consuming Remote device's messages `$ bin/console messenger:consume`
 
 | App            | URL                    |
 |----------------|------------------------|
-| Public Web     | http://localhost       |
+| Public web     | http://localhost       |
 | Admin (public) | http://localhost/admin |
 | API            | http://localhost/api   |
 
 ### ⚙️ Remote Device
 
-1. Start `GPS_START={GPS} docker-compose -f compose-remote.yaml --project-name {PROJECT_NAME} up`
-    - {GPS} is start location and
-    - {PROJECT_NAME} must be unique Docker name.
+Start `$ GPS_START={GPS} docker-compose -f compose-remote.yaml --project-name {PROJECT_NAME} up`
 
-    Example: `GPS_START=10.250604,10.865496 docker-compose -f compose-remote.yaml --project-name remote1 up`
+- {GPS} is start location
+- {PROJECT_NAME} must be unique Docker name
+
+**Example**: `$ GPS_START=50.014040,14.625700 docker-compose -f compose-remote.yaml --project-name r1 up`
 
 ## Contribution
 
