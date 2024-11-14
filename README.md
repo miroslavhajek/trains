@@ -35,7 +35,7 @@ Start `$ GPS_START={GPS} docker-compose -f compose-remote.yaml --project-name {P
    ```
 1. `$ composer phpcs`
 1. `$ composer phpstan`
-1. `$ bin/phpunit`
+1. `$ composer phpunit`
 
 ## Architecture
 
