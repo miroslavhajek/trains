@@ -5,6 +5,7 @@ services:
             dockerfile: remote.Dockerfile
         command: >
             sh -c "
+                rm -rf var/cache && \
                 composer install --no-dev --no-scripts -o -q && \
                 bin/console cache:warmup --env=prod && \
                 bin/console do:mi:mi -n && \
