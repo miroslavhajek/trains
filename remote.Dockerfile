@@ -8,6 +8,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 RUN docker-php-ext-configure intl && docker-php-ext-install intl
+RUN pecl install redis && docker-php-ext-enable redis
 
 COPY .dockerfiles/php/php.ini /usr/local/etc/php/conf.d/docker-php.ini
 COPY . /var/www/html
