@@ -3,9 +3,9 @@ name: Tests
 on:
     push:
         branches:
-            - '**'
+            - "**"
         tags-ignore:
-            - '**'
+            - "**"
 
 jobs:
     tests:
@@ -30,7 +30,7 @@ jobs:
                     MYSQL_ROOT_PASSWORD: password
                     MYSQL_DATABASE: app_test
                 ports:
-                    - '3306:3306'
+                    - "3306:3306"
                 options: --health-cmd="mysqladmin ping -h localhost --silent" --health-interval=10s --health-timeout=5s --health-retries=3
 
         steps:
