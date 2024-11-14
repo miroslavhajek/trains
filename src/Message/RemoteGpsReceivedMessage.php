@@ -11,7 +11,7 @@ final readonly class RemoteGpsReceivedMessage
         public string $deviceId,
         public string $lat,
         public string $lon,
-        public DateTimeImmutable $remoteCreatedAt,
+        public DateTimeImmutable $createdAt,
     ) {
     }
 }

@@ -81,7 +81,7 @@ class HubApiControllerTest extends ApiTestCase
                     'deviceId' => $device->getId(),
                     'lat' => '12.545454',
                     'lon' => '55.750032',
-                    'remoteCreatedAt' => '2024-04-12 13:43:01',
+                    'createdAt' => '2024-04-12 13:43:01',
                 ],
             ],
         );

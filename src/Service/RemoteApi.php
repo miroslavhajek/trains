@@ -47,7 +47,13 @@ class RemoteApi
 
         $statusCode = $response->getStatusCode();
         if ($statusCode !== Response::HTTP_CREATED) {
-            throw new RuntimeException('Connect HUB failed', $statusCode);
+            throw new RuntimeException(
+                sprintf(
+                    'Connect HUB failed: %s',
+                    $response->getContent(false),
+                ),
+                $statusCode,
+            );
         }
 
         return $response->toArray()['id'];
@@ -68,7 +74,7 @@ class RemoteApi
                     'deviceId' => $hubId->toString(),
                     'lat' => $location->getLat(),
                     'lon' => $location->getLon(),
-                    'remoteCreatedAt' => $location->getCreatedAt()->format('Y-m-d H:i:s'),
+                    'createdAt' => $location->getCreatedAt()->format('Y-m-d H:i:s'),
                 ]),
             ],
         );

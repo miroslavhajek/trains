@@ -52,7 +52,7 @@ class HubApiController extends AbstractController
             $request->getContent(),
             RemoteGpsReceivedMessage::class,
             'json',
-            [AbstractNormalizer::ATTRIBUTES => ['deviceId', 'lat', 'lon', 'remoteCreatedAt']],
+            [AbstractNormalizer::ATTRIBUTES => ['deviceId', 'lat', 'lon', 'createdAt']],
         );
 
         $messageBus->dispatch($message);

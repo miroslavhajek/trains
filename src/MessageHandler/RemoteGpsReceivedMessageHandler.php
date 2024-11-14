@@ -11,9 +11,8 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 final readonly class RemoteGpsReceivedMessageHandler
 {
-    public function __construct(
-        private EntityManagerInterface $entityManager,
-    ) {
+    public function __construct(private EntityManagerInterface $entityManager)
+    {
     }
 
 
@@ -26,7 +25,7 @@ final readonly class RemoteGpsReceivedMessageHandler
         $location->setDevice($device);
         $location->setLat($message->lat);
         $location->setLon($message->lon);
-        $location->setRemoteCreatedAt($message->remoteCreatedAt);
+        $location->setRemoteCreatedAt($message->createdAt);
 
         $this->entityManager->persist($location);
         $this->entityManager->flush();
