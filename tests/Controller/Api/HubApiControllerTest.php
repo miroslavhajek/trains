@@ -68,13 +68,14 @@ class HubApiControllerTest extends ApiTestCase
 
         $url = static::getContainer()
             ->get(UrlGeneratorInterface::class)
-            ->generate('app_hub_api_create_location', ['id' => $device->getId()]);
+            ->generate('app_hub_api_create_location');
 
         $client->request(
             Request::METHOD_POST,
             $url,
             [
                 'json' => [
+                    'deviceId' => $device->getId(),
                     'lat' => '12.545454',
                     'lon' => '55.750032',
                     'remoteCreatedAt' => '2024-04-12 13:43:01',
@@ -84,9 +85,8 @@ class HubApiControllerTest extends ApiTestCase
 
         self::assertResponseStatusCodeSame(Response::HTTP_CREATED);
 
-        $locations = DeviceLocationFactory::repository()->findBy([]);
+        $locations = DeviceLocationFactory::repository()->count([]);
 
-        self::assertCount(1, $locations);
-        self::assertSame($device->getId(), $locations[0]->getDevice()?->getId());
+        self::assertSame(0, $locations, 'Async'); //TODO: Check messenger
     }
 }

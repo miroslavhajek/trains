@@ -4,8 +4,10 @@
 
 ## Production
 
-1. Run Docker `$ docker compose up -d`
-1. Install dependencies `$ docker exec -it trains-php-1 composer install`... (migrate DB etc.)
+1. Start Docker `$ docker compose up -d`
+1. Open terminal `$ docker exec -it trains-php-1 bash`
+1. Install dependencies (`$ composer install`...)
+2. Start consuming Remote device's messages `$ bin/console messenger:consume`
 
 ### ☁️ HUB
 
@@ -46,7 +48,7 @@
 ## TODO
 
 - [ ] Batch sync
-- [ ] Prijimat zpravy s polohou do fronty (Rabbit) a async. je nasledne zpracovavat
+- [x] Prijimat zpravy s polohou do fronty (Rabbit) a async. je nasledne zpracovavat
 - [ ] Performace - zobrazeni `Is Online` u `Device` se resi prohledanim pole (otestovat Criteria)
 - [ ] Nedela se rozdilna synchronizace (pouze se posilaji data o poloze; neposila se info ani o druhem pokusu apod.)
 - [ ] Pridat ciselnou radu (`Ymd+` + `i++`) pro kontrolu celistvosti rady?

@@ -3,13 +3,14 @@
 namespace App\Controller\Api;
 
 use App\Entity\Device;
-use App\Entity\DeviceLocation;
+use App\Message\RemoteGpsReceivedMessage;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -41,24 +42,20 @@ class HubApiController extends AbstractController
     }
 
 
-    #[Route('/api/devices/{id}/locations', methods: ['POST'], name: 'app_hub_api_create_location')]
+    #[Route('/api/devices/locations', methods: ['POST'], name: 'app_hub_api_create_location')]
     public function createLocation(
         Request $request,
-        Device $device,
         SerializerInterface $serializer,
-        EntityManagerInterface $entityManager,
+        MessageBusInterface $messageBus,
     ): Response {
-        $location = $serializer->deserialize(
+        $message = $serializer->deserialize(
             $request->getContent(),
-            DeviceLocation::class,
+            RemoteGpsReceivedMessage::class,
             'json',
-            [AbstractNormalizer::ATTRIBUTES => ['lat', 'lon', 'remoteCreatedAt']],
+            [AbstractNormalizer::ATTRIBUTES => ['deviceId', 'lat', 'lon', 'remoteCreatedAt']],
         );
 
-        $location->setDevice($device);
-
-        $entityManager->persist($location);
-        $entityManager->flush();
+        $messageBus->dispatch($message);
 
         return new Response(null, Response::HTTP_CREATED);
     }

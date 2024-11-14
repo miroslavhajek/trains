@@ -9,6 +9,7 @@ RUN apt-get update \
 
 RUN docker-php-ext-configure intl && docker-php-ext-install intl
 
+RUN pecl install redis && docker-php-ext-enable redis
 RUN pecl install xdebug && docker-php-ext-enable xdebug
 
 COPY php.ini /usr/local/etc/php/conf.d/docker-php.ini

@@ -37,8 +37,15 @@ services:
         networks:
             - local-network
 
+    redis:
+        image: redis:7.2
+        ports:
+            - "6379:6379"
+        networks:
+            - local-network
+
 networks:
     local-network:
-        internal: true
+        driver: bridge
     trains-network:
         driver: bridge
