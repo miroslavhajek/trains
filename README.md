@@ -24,7 +24,7 @@ Start `$ GPS_START={GPS} docker-compose -f compose-remote.yaml --project-name {P
 - {GPS} is start location
 - {PROJECT_NAME} must be unique Docker name
 
-**Example**: `$ GPS_START=50.014040,14.625700 docker-compose -f compose-remote.yaml --project-name r1 up`
+**Example**: `$ GPS_START=50.014040,14.625700 docker-compose -f compose-remote.yaml --project-name r1 up --build`
 
 ## Contribution
 
