@@ -2,16 +2,33 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\User;
+use App\Factory\PageFactory;
+use App\Factory\UserFactory;
+use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+    public function __construct(private readonly UserPasswordHasherInterface $passwordHasher)
+    {
+    }
+
+
     public function load(ObjectManager $manager): void
     {
-        // $product = new Product();
-        // $manager->persist($product);
+        UserFactory::createOne([
+            'email' => 'admin@trains.com',
+            'password' => $this->passwordHasher->hashPassword(new User(), 'admin'),
+            'roles' => [
+                'ROLE_ADMIN',
+            ],
+        ]);
 
-        $manager->flush();
+        PageFactory::createMany(36, [
+            'publishedAt' => new DateTimeImmutable(),
+        ]);
     }
 }
