@@ -40,6 +40,24 @@ Start `$ GPS_START={GPS} docker-compose -f compose-remote.yaml --project-name {P
 
 ## Architecture
 
+```mermaid
+sequenceDiagram
+    participant HUB as HUB
+    participant RemoteDevice as RemoteDevice
+
+    RemoteDevice ->> HUB: POST /api/devices (Registration)
+    activate HUB
+    HUB -->> RemoteDevice: 201 Created
+    deactivate HUB
+
+    loop 1-n
+        RemoteDevice ->> HUB: POST /api/devices/locations (Send GPS)
+        activate HUB
+        HUB -->> RemoteDevice: 201 Created
+        deactivate HUB
+    end
+```
+
 ### DB Table prefixes
 
 | HUB | Remote device |
