@@ -7,6 +7,7 @@ use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use LogicException;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 
 #[ORM\Entity(repositoryClass: DeviceRepository::class)]
@@ -40,6 +41,16 @@ class Device
 
     public function getId(): ?string
     {
+        return $this->id;
+    }
+
+
+    public function getIdStrict(): string
+    {
+        if ($this->id === null) {
+            throw new LogicException('Device id cannot be null');
+        }
+
         return $this->id;
     }
 
