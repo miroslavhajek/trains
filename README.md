@@ -33,7 +33,8 @@ Start `$ GPS_START={GPS} docker-compose -f compose-remote.yaml --project-name {P
     APP_ENV=dev
     DATABASE_URL="mysql://root:password@database:3306/app?serverVersion=8.3.0&charset=utf8mb4"
    ```
-1. (optional) `$ bin/console doctrine:fixtures:load`
+1. (optional) `$ bin/console doctrine:fixtures:load --group=app`
+1. (optional) `$ bin/console doctrine:fixtures:load --group=extra`
 1. `$ composer phpcs`
 1. `$ composer phpstan`
 1. `$ composer phpunit`

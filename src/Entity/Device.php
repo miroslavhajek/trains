@@ -109,23 +109,4 @@ class Device
 
         return $this;
     }
-
-
-    public function isOnline(): bool
-    {
-        $threshold = (new DateTimeImmutable())->modify('-10 seconds');
-        $filter = static function (int $key, DeviceLocation $location) use ($threshold) {
-            return $location->getCreatedAt() > $threshold;
-        };
-
-        return $this->getLocations()->findFirst($filter) !== null;
-    }
-
-
-    public function lastOnlineAt(): ?DateTimeImmutable
-    {
-        return $this->getLocations()->findFirst(
-            static fn (int $key, DeviceLocation $location) => true,
-        )?->getCreatedAt();
-    }
 }

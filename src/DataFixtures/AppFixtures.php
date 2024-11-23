@@ -3,19 +3,25 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
-use App\Factory\DeviceFactory;
-use App\Factory\DeviceLocationFactory;
-use App\Factory\PageFactory;
 use App\Factory\UserFactory;
-use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class AppFixtures extends Fixture
+class AppFixtures extends Fixture implements FixtureGroupInterface
 {
     public function __construct(private readonly UserPasswordHasherInterface $passwordHasher)
     {
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public static function getGroups(): array
+    {
+        return ['app'];
     }
 
 
@@ -27,14 +33,6 @@ class AppFixtures extends Fixture
             'roles' => [
                 'ROLE_ADMIN',
             ],
-        ]);
-
-        PageFactory::createMany(36, [
-            'publishedAt' => new DateTimeImmutable(),
-        ]);
-
-        DeviceFactory::createMany(36, [
-            'locations' => DeviceLocationFactory::createMany(100),
         ]);
     }
 }
