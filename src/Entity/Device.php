@@ -92,6 +92,14 @@ class Device
     }
 
 
+    public function removeLocation(DeviceLocation $location): static
+    {
+        $this->locations->removeElement($location);
+
+        return $this;
+    }
+
+
     public function isOnline(): bool
     {
         $threshold = (new DateTimeImmutable())->modify('-10 seconds');

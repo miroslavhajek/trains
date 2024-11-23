@@ -3,7 +3,6 @@
 namespace App\Factory;
 
 use App\Entity\DeviceLocation;
-use App\Entity\RemoteLocationState;
 use DateTimeImmutable;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
@@ -21,10 +20,9 @@ final class DeviceLocationFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'device' => DeviceFactory::new(),
-            'lat' => self::faker()->text(32),
-            'lon' => self::faker()->text(32),
-            'state' => RemoteLocationState::New,
+            'device' => DeviceFactory::findOrCreate([]),
+            'lat' => self::faker()->latitude,
+            'lon' => self::faker()->longitude,
             'createdAt' => DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
             'remoteCreatedAt' => DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
         ];

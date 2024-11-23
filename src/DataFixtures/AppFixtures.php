@@ -3,6 +3,8 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use App\Factory\DeviceFactory;
+use App\Factory\DeviceLocationFactory;
 use App\Factory\PageFactory;
 use App\Factory\UserFactory;
 use DateTimeImmutable;
@@ -29,6 +31,10 @@ class AppFixtures extends Fixture
 
         PageFactory::createMany(36, [
             'publishedAt' => new DateTimeImmutable(),
+        ]);
+
+        DeviceFactory::createMany(36, [
+            'locations' => DeviceLocationFactory::createMany(100),
         ]);
     }
 }
