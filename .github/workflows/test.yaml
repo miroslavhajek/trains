@@ -67,7 +67,6 @@ jobs:
 
             -   name: Ensure database and schema exist
                 run: |
-                    bin/console doctrine:database:create --if-not-exists
                     bin/console doctrine:migrations:migrate -n
 
             -   name: Build Container
